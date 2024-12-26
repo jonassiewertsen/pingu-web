@@ -2,47 +2,27 @@ package main
 
 import (
 	"embed"
-	"github.com/gofiber/fiber/v2"
-	"github.com/gofiber/template/django/v3"
-	"net/http"
+	"fmt"
+	"pingu-web/application"
+	"pingu-web/routes"
 )
 
 //go:embed resources/views
-var viewsAssets embed.FS
+var viewsPath embed.FS
 
 func main() {
-	// Detect the environment (default to production)
-	// env := os.Getenv("APP_ENV") // GET from .env later
-	isDev := true
+	fmt.Printf("JO")
 
-	// Create a new engine
-	engine := django.NewPathForwardingFileSystem(http.FS(viewsAssets), "/resources/views", ".django.html")
+	cfg := application.NewConfig()
+	app := application.Create(cfg, viewsPath)
 
-	// Pass the engine to the Views
-	app := fiber.New(fiber.Config{
-		Views: engine,
-	})
+	routes.Init(app)
 
-	// Middleware to set development mode
-	app.Use(func(c *fiber.Ctx) error {
-		c.Locals("ViteDev", isDev)
-		return c.Next()
-	})
+	// Serve static assets from the public folder
+	app.Fiber.Static("/", "./public")
 
-	app.Get("/", func(c *fiber.Ctx) error {
-		// Render index
-		return c.Render("index", fiber.Map{
-			"title":      "Hello, World!",
-			"stuff_list": []string{"a", "b", "c"},
-			"ViteDev":    c.Locals("ViteDev"),
-		}, "layouts/main")
-	})
-
-	// Serve static assets in production
-	app.Static("/", "./public")
-
-	err := app.Listen(":8080")
+	err := app.Fiber.Listen(cfg.AppPort)
 	if err != nil {
-		return
+		panic(err) // Or any other error handling you prefer
 	}
 }
