@@ -8,7 +8,7 @@ import (
 )
 
 //go:embed resources/views
-var viewsAsssets embed.FS
+var viewsAssets embed.FS
 
 func main() {
 	// Detect the environment (default to production)
@@ -16,7 +16,7 @@ func main() {
 	isDev := true
 
 	// Create a new engine
-	engine := django.NewPathForwardingFileSystem(http.FS(viewsAsssets), "/resources/views", ".django.html")
+	engine := django.NewPathForwardingFileSystem(http.FS(viewsAssets), "/resources/views", ".django.html")
 
 	// Pass the engine to the Views
 	app := fiber.New(fiber.Config{
