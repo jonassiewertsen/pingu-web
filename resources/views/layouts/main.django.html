@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>{{ title }}</title>
+  {% if ViteDev %}
+  <script type="module" src="http://localhost:8081/@vite/client"></script>
+  <script type="module" src="http://localhost:8081/resources/js/app.js"></script>
+  <link rel="stylesheet" href="http://localhost:8081/resources/css/app.css">
+  {% else %}
+  <link rel="stylesheet" href="/assets/app.css">
+  <script type="module" src="/assets/app.js"></script>
+  {% endif %}
+</head>
+
+<body>
+  {{ embed }}
+</body>
+
+</html>

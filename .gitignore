@@ -1,0 +1,6 @@
+/node_modules
+/public/assets
+.env
+/.idea
+/.vscode
+.DS_Store
