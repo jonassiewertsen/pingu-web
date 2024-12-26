@@ -32,7 +32,7 @@ func main() {
 	app.Get("/", func(c *fiber.Ctx) error {
 		// Render index
 		return c.Render("index", fiber.Map{
-			"title":      "Hello, World dd!",
+			"title":      "Hello, World!",
 			"stuff_list": []string{"a", "b", "c"},
 			"ViteDev":    c.Locals("ViteDev"),
 		}, "layouts/main")
