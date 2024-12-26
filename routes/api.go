@@ -5,9 +5,9 @@ import (
 )
 
 func initApiRoutes(app *application.App) {
-	//ctl := controller.NewController(app)
+	// ctl := controller.NewController(app)
 	//
-	//app.Fiber.Route("/api/v1", func(r fiber.Router) {
-	//	r.Get("/", ctl.Home)
-	//})
+	// app.Fiber.Route("/api/v1", func(r fiber.Router) {
+	//	 r.Get("/", ctl.Home)
+	// })
 }
