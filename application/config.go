@@ -2,6 +2,7 @@ package application
 
 import (
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/storage/redis/v2"
 	"github.com/joho/godotenv"
 	"os"
 	"strings"
@@ -12,6 +13,9 @@ type Config struct {
 	AppEnv   string
 	AppPort  string
 	AppIsDev bool
+
+	CacheStorage     string
+	RedisCacheConfig redis.Config
 
 	Fiber fiber.Config
 
@@ -32,6 +36,7 @@ func NewConfig() *Config {
 	config := &Config{
 		AppEnv:            os.Getenv("APP_ENV"),
 		AppPort:           os.Getenv("SERVER_PORT"),
+		CacheStorage:      "memory",
 		Fiber:             fiber.Config{Views: nil},
 		SessionExpiration: 24 * time.Hour,
 		SessionStorage:    "memory", // Supporte: memory

@@ -9,9 +9,10 @@ import (
 )
 
 type App struct {
+	Cache   fiber.Storage
 	Fiber   *fiber.App
-	config  *Config
 	Session *session.Store
+	config  *Config
 }
 
 func Create(config *Config, viewPath embed.FS) *App {
@@ -22,12 +23,14 @@ func Create(config *Config, viewPath embed.FS) *App {
 		Views: config.Fiber.Views,
 	})
 
-	sessionStore := createSessionStore(config)
+	cacheStorage := createCacheStorage(config)
+	sessionStorage := createSessionStore(config)
 
 	return &App{
 		Fiber:   f,
+		Cache:   cacheStorage,
+		Session: sessionStorage,
 		config:  config,
-		Session: sessionStore,
 	}
 }
 
