@@ -7,28 +7,28 @@ import (
 )
 
 func createSessionStore(config *Config) *session.Store {
-	var sessionStorage fiber.Storage
-
-	// match the session storage type
-	switch config.SessionStorage {
-	case "memory":
-		sessionStorage = createMemoryStorage()
-	default:
-		panic("Unknown session storage type")
-	}
-
 	sessionConfig := session.Config{
 		Expiration:     config.SessionExpiration,
 		CookieSecure:   config.CookieSecure,
 		CookieHTTPOnly: config.CookieHTTPOnly,
 		CookieSameSite: config.CookieSameSite,
 		KeyLookup:      config.KeyLookup,
-		Storage:        sessionStorage,
+		Storage:        createSessionStorage(config),
 	}
 
 	return session.New(sessionConfig)
 }
 
-func createMemoryStorage() fiber.Storage {
-	return memory.New()
+/**
+ * Create a session storage based on the configuration
+ *
+ * Right now, the only supported storage is memory
+ */
+func createSessionStorage(config *Config) fiber.Storage {
+	switch config.SessionStorage {
+	case "memory":
+		return memory.New()
+	default:
+		panic("Invalid session storage")
+	}
 }
