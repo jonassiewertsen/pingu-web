@@ -27,6 +27,6 @@ func (c *Controller) render(ctx *fiber.Ctx, template string, layout string, data
 	// In case an error occurred, we will log it and show a 500 error page
 	if err != nil {
 		// TODO: Log error
-		_ = ctx.Render("errors/500", fiber.Map{})
+		_ = ctx.Status(fiber.StatusInternalServerError).Render("errors/500", fiber.Map{})
 	}
 }
