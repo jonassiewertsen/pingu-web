@@ -2,7 +2,6 @@ package main
 
 import (
 	"embed"
-	"fmt"
 	"pingu-web/application"
 	"pingu-web/routes"
 )
@@ -11,8 +10,6 @@ import (
 var viewsPath embed.FS
 
 func main() {
-	fmt.Printf("JO")
-
 	cfg := application.NewConfig()
 	app := application.Create(cfg, viewsPath)
 
