@@ -3,13 +3,15 @@ package application
 import (
 	"embed"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/session"
 	"github.com/gofiber/template/django/v3"
 	"net/http"
 )
 
 type App struct {
-	Fiber  *fiber.App
-	config *Config
+	Fiber   *fiber.App
+	config  *Config
+	Session *session.Store
 }
 
 func Create(config *Config, viewPath embed.FS) *App {
@@ -20,9 +22,12 @@ func Create(config *Config, viewPath embed.FS) *App {
 		Views: config.Fiber.Views,
 	})
 
+	sessionStore := createSessionStore(config)
+
 	return &App{
-		Fiber:  f,
-		config: config,
+		Fiber:   f,
+		config:  config,
+		Session: sessionStore,
 	}
 }
 

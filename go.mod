@@ -4,6 +4,7 @@ go 1.23.3
 
 require (
 	github.com/gofiber/fiber/v2 v2.52.5
+	github.com/gofiber/storage/memory v1.3.4
 	github.com/gofiber/template/django/v3 v3.1.12
 	github.com/joho/godotenv v1.5.1
 )

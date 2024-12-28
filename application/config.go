@@ -5,13 +5,22 @@ import (
 	"github.com/joho/godotenv"
 	"os"
 	"strings"
+	"time"
 )
 
 type Config struct {
 	AppEnv   string
 	AppPort  string
 	AppIsDev bool
-	Fiber    fiber.Config
+
+	Fiber fiber.Config
+
+	SessionExpiration time.Duration
+	SessionStorage    string
+	CookieSecure      bool
+	CookieHTTPOnly    bool
+	CookieSameSite    string
+	KeyLookup         string
 }
 
 func NewConfig() *Config {
@@ -21,11 +30,15 @@ func NewConfig() *Config {
 	}
 
 	config := &Config{
-		AppEnv:  os.Getenv("APP_ENV"),
-		AppPort: os.Getenv("SERVER_PORT"),
-		Fiber: fiber.Config{
-			Views: nil,
-		},
+		AppEnv:            os.Getenv("APP_ENV"),
+		AppPort:           os.Getenv("SERVER_PORT"),
+		Fiber:             fiber.Config{Views: nil},
+		SessionExpiration: 24 * time.Hour,
+		SessionStorage:    "memory", // Supporte: memory
+		CookieSecure:      false,
+		CookieHTTPOnly:    true,
+		CookieSameSite:    "Lax",
+		KeyLookup:         "cookie:pingu_web",
 	}
 
 	setDefaults(config)

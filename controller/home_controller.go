@@ -1,6 +1,8 @@
 package controller
 
-import "github.com/gofiber/fiber/v2"
+import (
+	"github.com/gofiber/fiber/v2"
+)
 
 func (c *Controller) Home(ctx *fiber.Ctx) error {
 	c.render(ctx, "index", "layouts/main", fiber.Map{
