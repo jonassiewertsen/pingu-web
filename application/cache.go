@@ -7,7 +7,7 @@ import (
 	"runtime"
 )
 
-func createCacheStorage(config *Config) fiber.Storage {
+func initializeCache(config *Config) fiber.Storage {
 	switch config.SessionStorage {
 	case "memory":
 		return memory.New()

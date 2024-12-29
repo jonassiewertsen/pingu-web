@@ -4,33 +4,34 @@ import (
 	"embed"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/session"
-	"github.com/gofiber/template/django/v3"
-	"net/http"
+	"log/slog"
 )
 
 type App struct {
 	Cache   fiber.Storage
-	Fiber   *fiber.App
-	Session *session.Store
 	config  *Config
+	Fiber   *fiber.App
+	Log     *slog.Logger
+	Session *session.Store
 }
 
 func Create(config *Config, viewPath embed.FS) *App {
-	config.Fiber.Views = django.NewPathForwardingFileSystem(http.FS(viewPath), "/resources/views", ".django.html")
+	templateEngine := initializeTemplateEngine(viewPath)
+	cacheStorage := initializeCache(config)
+	sessionStorage := initializeSessions(config)
+	logger := initializeLogging(config)
 
-	// Pass the engine to the Views
+	// Pass the template engine to the Views
 	f := fiber.New(fiber.Config{
-		Views: config.Fiber.Views,
+		Views: templateEngine,
 	})
 
-	cacheStorage := createCacheStorage(config)
-	sessionStorage := createSessionStore(config)
-
 	return &App{
-		Fiber:   f,
 		Cache:   cacheStorage,
-		Session: sessionStorage,
 		config:  config,
+		Fiber:   f,
+		Log:     logger,
+		Session: sessionStorage,
 	}
 }
 

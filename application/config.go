@@ -19,6 +19,8 @@ type Config struct {
 
 	Fiber fiber.Config
 
+	LogLevel string
+
 	SessionExpiration time.Duration
 	SessionStorage    string
 	CookieSecure      bool
@@ -63,6 +65,10 @@ func setDefaults(config *Config) {
 
 	if config.AppPort == "" {
 		config.AppPort = ":8080"
+	}
+
+	if config.LogLevel == "" {
+		config.LogLevel = "info"
 	}
 }
 

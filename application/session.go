@@ -6,7 +6,7 @@ import (
 	"github.com/gofiber/storage/memory"
 )
 
-func createSessionStore(config *Config) *session.Store {
+func initializeSessions(config *Config) *session.Store {
 	sessionConfig := session.Config{
 		Expiration:     config.SessionExpiration,
 		CookieSecure:   config.CookieSecure,
