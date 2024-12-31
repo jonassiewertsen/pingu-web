@@ -1,7 +1,9 @@
 package middleware
 
 import (
+	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"runtime/debug"
 )
 
 /**
@@ -19,7 +21,10 @@ func RecoverMiddleware() fiber.Handler {
 		// Catch panics
 		defer func() {
 			if r := recover(); r != nil {
-				// TODO: Log error
+				// Log the full panic message and stack trace
+				fmt.Printf("Panic recovered: %v\n%s\n", r, debug.Stack())
+
+				// Optionally, log to a file or external logging system
 
 				// Return 500 status and error message
 				_ = c.Status(fiber.StatusInternalServerError).Render("errors/500", nil)

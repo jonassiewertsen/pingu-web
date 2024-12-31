@@ -1,4 +1,4 @@
-name: 'knowledge-frontend'
+name: 'ping-web'
 services:
   frontend:
     build:

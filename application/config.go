@@ -26,6 +26,7 @@ type Config struct {
 	CookieSecure      bool
 	CookieHTTPOnly    bool
 	CookieSameSite    string
+	CookieSecret      string // Cookie secret for encrypting cookies
 	KeyLookup         string
 }
 
@@ -45,6 +46,7 @@ func NewConfig() *Config {
 		CookieSecure:      false,
 		CookieHTTPOnly:    true,
 		CookieSameSite:    "Lax",
+		CookieSecret:      os.Getenv("COOKIE_SECRET"),
 		KeyLookup:         "cookie:pingu_web",
 	}
 
