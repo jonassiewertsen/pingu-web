@@ -18,6 +18,7 @@ func Init(app *application.App) {
 
 	// 404 Handler, in case a route could not be found
 	app.Fiber.Use(func(c *fiber.Ctx) error {
+		// Check if an error will be returned, as the template could not be found
 		return c.Status(fiber.StatusNotFound).Render("errors/404", nil)
 	})
 }
