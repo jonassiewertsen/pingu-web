@@ -38,7 +38,7 @@ func NewConfig() *Config {
 
 	config := &Config{
 		AppEnv:            os.Getenv("APP_ENV"),
-		AppPort:           os.Getenv("SERVER_PORT"),
+		AppPort:           os.Getenv("APP_PORT"),
 		CacheStorage:      "memory",
 		Fiber:             fiber.Config{Views: nil},
 		SessionExpiration: 24 * time.Hour,
